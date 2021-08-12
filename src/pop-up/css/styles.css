@@ -1,0 +1,458 @@
+*,
+*:before,
+*:after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.popup {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    user-select: none;
+}
+
+.container {
+    display: flex;
+    margin: 4px 0;
+    justify-content: center;
+}
+
+.nav {
+    width: 22%;
+}
+
+.content {
+    width: 76%;
+    background: #282828;
+    margin-right: 3px;
+    border-radius: 4px;
+    border: 1px solid #3e3e3e;
+    color: #fff;
+}
+
+.tab-nav {
+    padding: 4px 0 4px 3px;
+    margin-bottom: -2px;
+}
+
+.tab-nav ul {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.tab-nav > li {
+    position: relative;
+    display: block;
+    margin-bottom: 2px;
+    margin-right: -1px;
+}
+
+.tab-nav > li > a {
+    border: 1px solid transparent;
+    border-radius: 4px 0 0 4px;
+    padding: 10px 15px;
+}
+
+.tab-nav > li.active > a,
+.tab-nav > li.active > a:hover {
+    cursor: default;
+    background-color: #282828;
+    border: 1px solid #3e3e3e;
+    border-right-color: transparent;
+}
+
+.tab-nav > li > a:hover {
+    background-color: #54545460;
+    border-color: #54545460 #54545460 #54545460;
+}
+
+.tab-nav a {
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+}
+
+.tab-nav a .svg {
+    width: 20px;
+    pointer-events: none;
+}
+
+.tab-content > .tab-pane {
+    display: none;
+}
+
+.tab-content > .active {
+    display: block;
+}
+
+.header-popup {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #282828;
+}
+
+.header-popup p {
+    font-size: 15px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.body-popup {
+    height: 90%;
+    background: #363636;
+}
+
+.tab-content {
+    padding: 5px;
+}
+
+.option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.option:first-child {
+    margin-top: 7px;
+}
+
+.option:last-child {
+    margin-bottom: 7px;
+}
+
+#home .option:first-child {
+    margin-bottom: 0;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid #3e3e3e;
+    margin: 10px 0px;
+}
+
+.switch {
+    z-index: 1;
+}
+
+.center {
+    position: absolute;
+    display: inline-block;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.analytics {
+    display: flex;
+    flex-direction: column;
+}
+
+.analytics .title {
+    text-align: center;
+}
+
+.title {
+    width: 100%;
+    height: 10%;
+}
+
+.analytics-box {
+    width: 100%;
+    height: 90%;
+    display: flex;
+    margin-top: 5px;
+}
+
+.analytics-box hr:first-child {
+    margin-top: 0px;
+}
+
+.others {
+    padding: 5px;
+    padding-top: 0;
+    width: 100%;
+}
+
+.others hr:first-child {
+    margin-top: 0px;
+}
+
+.translated-words {
+    display: flex;
+    justify-content: space-around;
+}
+
+/* checkbox */
+.cmn-toggle {
+    position: absolute;
+    visibility: hidden;
+}
+
+.cmn-toggle + label {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    user-select: none;
+}
+
+input.cmn-toggle-round-flat + label {
+    width: 40px;
+    height: 20px;
+    background-color: #dddddd;
+    border-radius: 60px;
+    transition: background 0.4s;
+}
+
+input.cmn-toggle-round-flat + label:before,
+input.cmn-toggle-round-flat + label:after {
+    display: block;
+    position: absolute;
+    content: '';
+}
+
+input.cmn-toggle-round-flat + label:before {
+    top: 2px;
+    left: 2px;
+    bottom: 2px;
+    right: 2px;
+    background-color: #fff;
+    border-radius: 60px;
+    transition: background 0.4s;
+}
+
+input.cmn-toggle-round-flat + label:after {
+    top: 4px;
+    left: 4px;
+    bottom: 4px;
+    width: 12px;
+    background-color: #dddddd;
+    border-radius: 52px;
+    transition: margin 0.4s, background 0.4s;
+}
+
+input.cmn-toggle-round-flat:checked + label {
+    background-color: #8ce196;
+}
+
+input.cmn-toggle-round-flat:checked + label:after {
+    margin-left: 20px;
+    background-color: #8ce196;
+}
+
+/* select option */
+.custom-select-wrapper {
+    position: relative;
+    display: inline-block;
+    user-select: none;
+    align-items: center;
+    display: flex;
+}
+
+.custom-select-wrapper select {
+    display: none;
+}
+
+.custom-select {
+    position: relative;
+    display: inline-block;
+}
+
+.custom-select-trigger {
+    position: relative;
+    display: block;
+    width: 100px;
+    padding: 0 7px;
+    font-weight: 300;
+    color: #fff;
+    line-height: 30px;
+    background: #5c9cd8;
+    border-radius: 4px;
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-right: 22px;
+}
+
+.custom-select-trigger::first-letter {
+    text-transform: uppercase;
+}
+
+.custom-select-trigger:after {
+    position: absolute;
+    display: block;
+    content: '';
+    width: 7px;
+    height: 7px;
+    top: 50%;
+    right: 10px;
+    margin-top: -1px;
+    border-bottom: 1px solid #fff;
+    border-right: 1px solid #fff;
+    transform: rotate(45deg) translateY(-50%);
+    transition: all 0.2s ease-in-out;
+    transform-origin: 50% 0;
+}
+
+.custom-select.opened .custom-select-trigger:after {
+    margin-top: 3px;
+    transform: rotate(-135deg) translateY(-50%);
+}
+
+.custom-options {
+    position: absolute;
+    display: block;
+    top: 100%;
+    left: 0;
+    right: 0;
+    min-width: 100%;
+    margin: 8px 0;
+    border: 1px solid #3e3e3e;
+    border-radius: 4px;
+    box-sizing: border-box;
+    box-shadow: 0 2px 1px rgba(0, 0, 0, 0.07);
+    background: #363636;
+    transition: all 0.2s ease-in-out;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-10px);
+}
+
+.custom-options div {
+    max-height: 145px;
+    overflow-y: auto;
+    outline: none;
+}
+
+.custom-select.opened .custom-options {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+    transform: translateY(0);
+    z-index: 2;
+}
+
+.custom-options:before {
+    position: absolute;
+    display: block;
+    content: '';
+    bottom: 100%;
+    right: 10px;
+    width: 7px;
+    height: 7px;
+    margin-bottom: -3px;
+    border-top: 1px solid #3e3e3e;
+    border-left: 1px solid #3e3e3e;
+    background: #363636;
+    transform: rotate(45deg);
+    transition: all 0.2s ease-in-out;
+}
+
+.option-hover:before {
+    background: #f9f9f9;
+}
+
+.custom-option {
+    position: relative;
+    display: block;
+    border-bottom: 1px solid #3e3e3e;
+    font-weight: 600;
+    color: #b5b5b5;
+    line-height: 23px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    text-align: center;
+}
+
+.custom-option:first-of-type {
+    border-radius: 4px 4px 0 0;
+}
+
+.custom-option:last-of-type {
+    border-bottom: 0;
+    border-radius: 0 0 4px 4px;
+}
+
+.custom-option:hover,
+.custom-option.selected {
+    background: #282828;
+}
+
+.custom-options div::-webkit-scrollbar {
+    width: 10px;
+    background-color: #424242;
+}
+
+.custom-options div::-webkit-scrollbar-thumb {
+    background-color: #8e8e8e;
+    border: 1px solid #424242;
+    border-radius: 5px;
+}
+
+.custom-options div::-webkit-scrollbar-track {
+    background-color: #424242;
+}
+
+/* number input */
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+}
+
+.number-input {
+    border: 1.5px solid #3e3e3e;
+    display: inline-flex;
+    border-radius: 4px;
+}
+
+.number-input button {
+    outline: none;
+    background-color: inherit;
+    border: none;
+    width: 1.5rem;
+    height: 1.5rem;
+    cursor: pointer;
+    position: relative;
+}
+
+.number-input button:after {
+    position: absolute;
+    display: block;
+    content: '';
+    width: 7px;
+    height: 7px;
+    top: 50%;
+    right: 8.5px;
+    margin-top: -2px;
+    border-bottom: 1px solid #fff;
+    border-right: 1px solid #fff;
+    transform: rotate(45deg) translateY(-50%);
+    transform-origin: 50% 0;
+}
+
+.number-input button.plus:after {
+    transform: rotate(225deg) translateY(-50%);
+    margin-top: 3px;
+}
+
+.number-input input[type='number'] {
+    font-family: sans-serif;
+    max-width: 3rem;
+    padding: 0.5rem;
+    border: solid #3e3e3e;
+    border-width: 0 1.5px;
+    font-size: 1rem;
+    height: 1.5rem;
+    text-align: center;
+    outline: none;
+    background: #282828;
+    color: #fff;
+}

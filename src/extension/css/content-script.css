@@ -1,0 +1,99 @@
+/* hide youtube default subtitles */
+#caption-window-1 {
+    display: none;
+}
+
+#subtitles {
+    height: auto;
+    max-width: 300px;
+    width: max-content;
+    background: rgba(0, 0, 0, 0.5);
+    position: relative;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+}
+
+#line1, #line2 {
+    width: 100%;
+    height: 50%;
+}
+
+#subtitles .word:hover {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#subtitles .selected {
+    color: #62ff00;
+    font-weight: bold;
+}
+
+.dict-table {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    max-height: 370px;
+    overflow-y: overlay;
+    word-break: break-word;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dict-table > div {
+    width: 290px;
+    margin: 5px;
+}
+
+.translated-words {
+    flex-direction: column;
+    display: flex;
+    flex-flow: wrap;
+}
+
+.dict-table .title {
+    font-weight: bold;
+}
+
+.translated-words span {
+    width: 23%;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 0;
+    padding: 1px;
+    padding-left: 5px;
+}
+
+.translated-words span ul {
+    list-style: none;
+}
+
+span.origin-word {
+    width: 70%;
+    border-left: 0;
+}
+
+.translated-word:nth-last-child(2) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.origin-word:nth-last-child(1) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+#translation {
+    z-index: 100;
+    display: flex;
+    font-size: 16px;
+    justify-content: space-between;
+}
+
+#translation span {
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    width: 50%;
+    text-align: center;
+}
+
+#translation span:nth-child(1) {
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+}

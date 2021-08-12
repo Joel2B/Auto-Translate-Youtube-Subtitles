@@ -1,0 +1,39 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": ["standard"],
+    "parserOptions": {
+        "ecmaVersion": 12,
+        "sourceType": "module"
+    },
+    "parser": "babel-eslint",
+    "rules": {
+        "semi": [2, "always"],
+        "comma-dangle": [2, "always-multiline"],
+        "space-before-function-paren": ["error", "never"],
+        "eqeqeq": ["warn", "always"],
+        "indent": [
+            "warn",
+            4,
+            {
+                "ArrayExpression": "first",
+                "CallExpression": { "arguments": "first" },
+                "MemberExpression": "off",
+                "ObjectExpression": "off",
+                "ignoreComments": true,
+                "ignoredNodes": ["AssignmentExpression:has(Literal)"]
+            }
+        ],
+        "getter-return": "off",
+        "no-control-regex": "off",
+        "no-empty": ["error", { "allowEmptyCatch": true }],
+        "no-promise-executor-return": ["error"],
+        "no-template-curly-in-string": ["error"],
+        "no-unreachable-loop": ["error"],
+        "no-useless-backreference": ["error"],
+        "no-useless-escape": "off",
+        "require-atomic-updates": ["warn"]
+    }
+}
