@@ -2,6 +2,8 @@
 
 This extension replaces the default youtube subtitles with one customized that allows you to select a word and translates it for you.
 
+The extension is fully functional when the youtube page is in English language.
+
 Only tested in chrome and brave.
 
 ## Features
