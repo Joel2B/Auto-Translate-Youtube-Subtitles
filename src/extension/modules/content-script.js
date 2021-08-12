@@ -3,6 +3,7 @@ import { setOption, getAllOptions, getOption } from 'extension/modules/data';
 import {
     setupSubtitles,
     deactivateSubtitles,
+    removeSubtitles,
     removeTranslation,
     translateSubtitles,
 } from 'extension/modules/subtitles';
@@ -11,9 +12,9 @@ import { wordToSpan, escape } from 'extension/modules/word';
 let observer;
 
 const tasks = {
-    captions: async (value) => {
+    captions: (value) => {
         if (value) {
-            startObserver();
+            connectObserver();
         } else {
             disconnectObserver();
         }
@@ -40,10 +41,7 @@ function performTask(id, value) {
     }
 }
 
-function connectObserver() {
-    let line1 = '';
-    let line2 = '';
-
+async function connectObserver() {
     const callback = (mutationsList) => {
         for (const mutation of mutationsList) {
             if (!getOption('subtitlesActivated')) {
@@ -80,7 +78,28 @@ function connectObserver() {
         }
     };
 
-    const player = document.querySelector('#movie_player');
+    const playerAvailable = async () => {
+        return new Promise((resolve) => {
+            const timer = setInterval(() => {
+                console.log('[Extension] Trying to connect the observer');
+                const player = document.querySelector('#movie_player');
+                if (player) {
+                    clearInterval(timer);
+                    resolve(player);
+                }
+            }, 50);
+            setTimeout(() => {
+                const player = document.querySelector('#movie_player');
+                if (!player) {
+                    clearInterval(timer);
+                    console.log('[Extension] Observer error (time limit exceeded)');
+                    resolve();
+                }
+            }, 10 * 1000);
+        });
+    };
+
+    const player = await playerAvailable();
     if (!player) {
         return;
     }
@@ -90,6 +109,9 @@ function connectObserver() {
         childList: true,
         subtree: true,
     };
+
+    let line1 = '';
+    let line2 = '';
 
     observer = new MutationObserver(callback);
     observer.observe(player, config);
@@ -105,28 +127,30 @@ function disconnectObserver() {
     console.log('[Extension] Observer disconnected');
 }
 
-function startObserver() {
-    connectObserver();
-    if (!observer) {
-        console.log('[Extension] Observer error');
-        const timer = setInterval(() => {
-            console.log('[Extension] Trying to connect the observer');
-            if (!observer) {
-                connectObserver();
-                clearInterval(timer);
+function restartExecution() {
+    setInterval(() => {
+        const url = window.location.href;
+        if (getOption('curent-path') != url && url.includes('watch')) {
+            if (observer) {
+                disconnectObserver();
+                setOption('subtitlesActivated', false);
             }
-        }, 50);
-        setTimeout(() => {
-            if (!observer) {
-                clearInterval(timer);
-                console.log('[Extension] Observer error');
-            }
-        }, 10 * 1000);
-    }
+            removeSubtitles();
+            connectObserver();
+        }
+        if (getOption('curent-path') != url) {
+            setOption('curent-path', url);
+        }
+    }, 100);
 }
 
 async function app() {
     await getAllOptions();
+
+    if (!getOption('curent-path')) {
+        setOption('curent-path', window.location.href);
+        restartExecution();
+    }
 
     onMessage((request) => {
         const id = request.id;
@@ -143,7 +167,12 @@ async function app() {
         return;
     }
 
-    startObserver();
+    // load only in videos
+    if (!window.location.href.includes('watch')) {
+        return;
+    }
+
+    connectObserver();
 }
 
 app();

@@ -5,12 +5,16 @@ import { sendMessageBackground } from 'utils/chrome/runtime';
 
 const dom = {};
 
+function getSubtitleButton() {
+    return document.querySelector('.ytp-subtitles-button');
+}
+
 function isSubtitlesEnabled() {
-    return dom.subtitlesButton && dom.subtitlesButton.style.display != 'none';
+    return getSubtitleButton() && getSubtitleButton().style.display != 'none' && getSubtitleButton().clientWidth != 0;
 }
 
 function isSubtitlesActive() {
-    const pressed = dom.subtitlesButton.getAttribute('aria-pressed');
+    const pressed = getSubtitleButton().getAttribute('aria-pressed');
     return pressed == 'true';
 }
 
@@ -19,7 +23,7 @@ async function activateSubtitles() {
         const value = getOption('subtitlesActivated');
         if (value) {
             if (!isSubtitlesActive()) {
-                dom.subtitlesButton.click();
+                getSubtitleButton().click();
             }
             resolve(true);
         }
@@ -28,7 +32,7 @@ async function activateSubtitles() {
             const timer = setInterval(() => {
                 if (isSubtitlesEnabled()) {
                     if (!isSubtitlesActive()) {
-                        dom.subtitlesButton.click();
+                        getSubtitleButton().click();
                     }
                     setOption('subtitlesActivated', true);
                     clearInterval(timer);
@@ -76,8 +80,10 @@ function createDictionary(data) {
     dom.translation.parentNode.insertBefore(dictTable, dom.translation.nextSibling);
 }
 
-function removeSubtitles() {
-    dom.subtitles.remove();
+export function removeSubtitles() {
+    if (dom.subtitles) {
+        dom.subtitles.remove();
+    }
 }
 
 export function removeTranslation() {
@@ -85,7 +91,7 @@ export function removeTranslation() {
     if (document.querySelector('.dict-table')) {
         document.querySelector('.dict-table').remove();
     }
-    if (document.querySelector('#subtitles .selected')) { 
+    if (document.querySelector('#subtitles .selected')) {
         document.querySelector('#subtitles .selected').classList.remove('selected');
     }
 }
@@ -178,14 +184,15 @@ export function deactivateSubtitles() {
         return;
     }
 
-    if (dom.subtitlesButton.getAttribute('aria-pressed') == 'true') {
-        dom.subtitlesButton.click();
+    if (getSubtitleButton().getAttribute('aria-pressed') == 'true') {
+        getSubtitleButton().click();
     }
     setOption('subtitlesActivated', false);
     removeSubtitles();
 }
 
 function createSubtitles() {
+    removeSubtitles();
     dom.subtitles = document.createElement('div');
     dom.subtitles.id = 'subtitles';
 
@@ -249,12 +256,11 @@ export async function translateSubtitles() {
         translateTo = translateTo.split('#')[0];
     }
 
-    const subtitlePosition = 2;
     const createdTranslations = getOption('created-translations');
     const autoTranslate = getOption('auto-translate');
-    // translate this to the language you're using your youtube page
-    const AutoTranslateText = 'Auto-translate';
-    const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+    const delay = (ms) => new Promise((resolve) => {
+        setTimeout(resolve, ms);
+    });
 
     if (!createdTranslations && !autoTranslate) {
         return;
@@ -264,11 +270,18 @@ export async function translateSubtitles() {
     settingsButton.click();
     await delay(1000);
 
-    const subtitulesMenu = document.querySelectorAll('.ytp-menuitem-content')[subtitlePosition];
-    if (!subtitulesMenu) {
+    let subtitlesExist = false;
+    const subtitulesMenu = document.querySelectorAll('.ytp-menuitem');
+    for (const item of subtitulesMenu) {
+        if (/\([0-9]+\)/.test(item.textContent)) {
+            item.click();
+            subtitlesExist = true;
+        }
+    }
+    if (!subtitlesExist) {
+        settingsButton.click();
         return;
     }
-    subtitulesMenu.click();
     await delay(1000);
 
     let translationsExist = false;
@@ -289,20 +302,38 @@ export async function translateSubtitles() {
 
     if (autoTranslate) {
         const subtituleItems = document.querySelectorAll('.ytp-menuitem');
+        let sameLanguage = false;
         for (const item of subtituleItems) {
-            if (item.textContent == AutoTranslateText) {
+            if (item.ariaChecked == 'true' && item.textContent.includes(translateTo)) {
                 item.click();
-                break;
+                sameLanguage = true;
             }
         }
+        if (sameLanguage) {
+            settingsButton.click();
+            return;
+        }
+        // everything will work if the automatic translation button is at the end
+        subtituleItems[subtituleItems.length - 1].click();
     }
     await delay(1000);
 
+    let languageExist = false;
     const languages = document.querySelectorAll('.ytp-menuitem');
     for (const item of languages) {
         if (item.textContent == translateTo) {
-            item.click();
+            languageExist = true;
+            if (item.ariaChecked == 'true') {
+                settingsButton.click();
+            } else {
+                item.click();
+            }
             break;
+        }
+    }
+    if (!languageExist) {
+        if (document.querySelector('.ytp-settings-menu').style.display != 'none') {
+            settingsButton.click();
         }
     }
 }
@@ -310,12 +341,12 @@ export async function translateSubtitles() {
 async function closeAd() {
     return new Promise((resolve) => {
         const timer = setInterval(() => {
-            console.log('[Extension] ad running');
+            console.log('[Extension] Ad running');
             const ad = document.querySelectorAll(
                 '.ytp-ad-player-overlay, .ytp-ad-player-overlay-instream-info, .ytp-ad-simple-ad-badge',
             );
             if (ad.length == 0) {
-                console.log('[Extension] ad closed');
+                console.log('[Extension] Ad closed');
                 clearInterval(timer);
                 resolve(true);
             }
@@ -325,7 +356,6 @@ async function closeAd() {
 
 export async function setupSubtitles(player) {
     dom.player = player;
-    dom.subtitlesButton = document.querySelector('.ytp-subtitles-button');
 
     await closeAd();
     await activateSubtitles();
@@ -334,7 +364,7 @@ export async function setupSubtitles(player) {
         return;
     }
 
-    dom.subtitlesButton.addEventListener('click', activateSubtitles);
+    getSubtitleButton().addEventListener('click', activateSubtitles);
 
     createSubtitles();
     dragSubtitles();
