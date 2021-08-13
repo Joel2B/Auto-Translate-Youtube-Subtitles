@@ -276,6 +276,7 @@ export async function translateSubtitles() {
         if (/\([0-9]+\)/.test(item.textContent)) {
             item.click();
             subtitlesExist = true;
+            break;
         }
     }
     if (!subtitlesExist) {
@@ -307,6 +308,7 @@ export async function translateSubtitles() {
             if (item.ariaChecked == 'true' && item.textContent.includes(translateTo)) {
                 item.click();
                 sameLanguage = true;
+                break;
             }
         }
         if (sameLanguage) {
