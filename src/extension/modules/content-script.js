@@ -103,7 +103,7 @@ async function connectObserver() {
     if (!player) {
         return;
     }
-    setupSubtitles(player);
+    await setupSubtitles(player);
     const config = {
         attributes: true,
         childList: true,

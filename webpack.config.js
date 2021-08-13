@@ -22,7 +22,7 @@ module.exports = (env, arg) => {
             new webpack.DefinePlugin({
                 // replace with your own api
                 TRANSLATION_API: JSON.stringify(
-                    'http://localhost/extensions-chrome/custom-subtitles/dist/translation-api/',
+                    'http://localhost/chrome-extensions/custom-subtitles/dist/translation-api/',
                 ),
             }),
             new HtmlWebpackPlugin({

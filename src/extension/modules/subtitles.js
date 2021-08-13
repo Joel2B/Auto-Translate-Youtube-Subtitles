@@ -26,7 +26,7 @@ async function activateSubtitles() {
             if (!isSubtitlesActive()) {
                 getSubtitleButton().click();
             }
-            resolve(true);
+            resolve();
         }
 
         if (!value) {
@@ -37,14 +37,14 @@ async function activateSubtitles() {
                     }
                     setOption('subtitlesActivated', true);
                     clearInterval(timer);
-                    resolve(true);
+                    resolve();
                 }
             }, 50);
             setTimeout(() => {
                 if (!getOption('subtitlesActivated')) {
                     clearInterval(timer);
                     console.log('[Extension] Subtitles are disabled');
-                    resolve(false);
+                    resolve();
                 }
             }, 10 * 1000);
         }
@@ -260,9 +260,10 @@ export async function translateSubtitles() {
 
     const createdTranslations = getOption('created-translations');
     const autoTranslate = getOption('auto-translate');
-    const delay = (ms) => new Promise((resolve) => {
-        setTimeout(resolve, ms);
-    });
+    const delay = (ms) =>
+        new Promise((resolve) => {
+            setTimeout(resolve, ms);
+        });
 
     if (!createdTranslations && !autoTranslate) {
         return;
@@ -352,9 +353,10 @@ async function closeAd() {
             if (ad.length == 0) {
                 console.log('[Extension] Ad closed');
                 clearInterval(timer);
-                resolve(true);
+                resolve();
             }
-        }, 100);
+            // enough time for ads to load
+        }, 2 * 1000);
     });
 }
 
