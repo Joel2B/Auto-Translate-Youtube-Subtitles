@@ -30,11 +30,11 @@ By default deepl is used, since google translator has a limit for translating.
 
 Auto selection translated subtitles
 
-![1 1](https://user-images.githubusercontent.com/58922368/129124811-9fb6ce42-3913-453d-9039-327975196148.png)
+![1](https://user-images.githubusercontent.com/58922368/129126665-06bb69a4-362a-400e-9582-38c8b139b88b.png)
 
 Auto selection auto-translate subtitles
 
-![1](https://user-images.githubusercontent.com/58922368/129126665-06bb69a4-362a-400e-9582-38c8b139b88b.png)
+![1 1](https://user-images.githubusercontent.com/58922368/129124811-9fb6ce42-3913-453d-9039-327975196148.png)
 
 Translation with google
 
