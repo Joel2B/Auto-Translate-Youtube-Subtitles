@@ -4,6 +4,7 @@ import { getOption, setOption } from 'extension/modules/data';
 import { sendMessageBackground } from 'utils/chrome/runtime';
 
 const dom = {};
+let timerRemoveTranslation;
 
 function getSubtitleButton() {
     return document.querySelector('.ytp-subtitles-button');
@@ -108,6 +109,7 @@ async function translateWord(e) {
     const timeCloseTranslation = getOption('time-close-translation');
 
     removeTranslation();
+    clearTimeout(timerRemoveTranslation);
 
     if (e.target.localName == 'span' && e.target.outerHTML.includes('word') && e.target.innerText != '') {
         const word = e.target.innerText.trim().toLowerCase();
@@ -173,7 +175,7 @@ async function translateWord(e) {
             return;
         }
 
-        setTimeout(() => {
+        timerRemoveTranslation = setTimeout(() => {
             removeTranslation();
         }, timeCloseTranslation * 1000);
     }
