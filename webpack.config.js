@@ -6,9 +6,10 @@ const FileManagerPlugin = require('filemanager-webpack-plugin');
 
 module.exports = (env, arg) => {
     const mode = arg.mode;
+
     return {
-        mode: mode,
-        devtool: mode == 'development' ? 'inline-source-map' : false,
+        mode: mode === 'production' ? mode : 'development',
+        devtool: mode === 'development' ? 'inline-source-map' : false,
         entry: {
             'pop-up': './src/pop-up/modules/script.js',
             background: './src/extension/modules/background.js',
@@ -16,7 +17,7 @@ module.exports = (env, arg) => {
         },
         resolve: { extensions: ['.js'], modules: [path.resolve(__dirname, 'src'), 'node_modules'] },
         optimization: {
-            minimize: mode != 'development',
+            minimize: mode === 'production',
         },
         plugins: [
             new webpack.DefinePlugin({
@@ -28,7 +29,7 @@ module.exports = (env, arg) => {
             new HtmlWebpackPlugin({
                 template: 'src/pop-up/index.html',
                 filename: 'pop-up.html',
-                minify: mode != 'development',
+                minify: mode === 'production',
                 inject: false,
                 scriptLoading: 'blocking',
             }),
@@ -57,12 +58,27 @@ module.exports = (env, arg) => {
             }),
             new FileManagerPlugin({
                 events: {
-                    onEnd: {
-                        move: [
-                            { source: './dist/pop-up.js', destination: './dist/js/pop-up.js' },
-                            { source: './dist/content-script.js', destination: './dist/js/content-script.js' },
-                        ],
-                    },
+                    onEnd: [
+                        {
+                            copy: [
+                                {
+                                    source: './dist/pop-up.js',
+                                    destination: './dist/js/pop-up.js',
+                                },
+                                {
+                                    source: './dist/content-script.js',
+                                    destination: './dist/js/content-script.js',
+                                },
+                                {
+                                    source: './dist/background.js',
+                                    destination: './dist/js/background.js',
+                                },
+                            ],
+                        },
+                        {
+                            delete: ['./dist/pop-up.js', './dist/content-script.js', './dist/background.js'],
+                        },
+                    ],
                 },
             }),
         ],
