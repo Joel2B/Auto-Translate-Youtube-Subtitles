@@ -182,6 +182,8 @@ async function translateWord(e) {
 }
 
 export function deactivateSubtitles() {
+    removeSubtitles();
+
     if (!isSubtitlesEnabled()) {
         return;
     }
@@ -189,8 +191,8 @@ export function deactivateSubtitles() {
     if (getSubtitleButton().getAttribute('aria-pressed') == 'true') {
         getSubtitleButton().click();
     }
+
     setOption('subtitlesActivated', false);
-    removeSubtitles();
 }
 
 function createSubtitles() {
@@ -254,7 +256,7 @@ function dragSubtitles() {
 
 export async function translateSubtitles() {
     let translateTo = getOption('translateTo');
-    if (translateTo.includes('#')) {
+    if (translateTo && translateTo.includes('#')) {
         translateTo = translateTo.split('#')[0];
     }
 

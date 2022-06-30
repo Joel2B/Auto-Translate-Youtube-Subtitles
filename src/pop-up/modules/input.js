@@ -12,6 +12,7 @@ export async function setupNumberInput(numberInput) {
         value = Number(input.value);
         setValue(id, value);
     }
+
     input.value = value;
 
     input.addEventListener(

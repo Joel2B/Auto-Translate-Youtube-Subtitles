@@ -19,8 +19,8 @@ class Utils {
             CURLOPT_HTTPHEADER     => $headers,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_MAXREDIRS      => 10,
-            CURLOPT_CONNECTTIMEOUT => 3,
-            CURLOPT_TIMEOUT        => 4,
+            CURLOPT_CONNECTTIMEOUT => CONNECTTIMEOUT,
+            CURLOPT_TIMEOUT        => TIMEOUT,
             CURLOPT_RETURNTRANSFER => true,
             // for debug only
             CURLOPT_SSL_VERIFYPEER => false,

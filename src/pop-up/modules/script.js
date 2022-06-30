@@ -4,13 +4,8 @@ import { setupNumberInput } from 'pop-up/modules/input';
 import { sendMessage } from 'utils/chrome/runtime';
 
 async function loadAnalytics() {
-    let analytics = await getLocalStorage('analytics');
-    if (!analytics) {
-        analytics = {
-            'translated-words': 0,
-        };
-        setLocalStorage('analytics', analytics);
-    }
+    const analytics = await getLocalStorage('analytics');
+
     document.getElementById('translated-words').textContent = analytics['translated-words'];
 }
 

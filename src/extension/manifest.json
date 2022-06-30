@@ -20,7 +20,7 @@
         }
     ],
     "background": {
-        "service_worker": "background.js"
+        "service_worker": "js/background.js"
     },
     "permissions": ["activeTab", "storage", "tabs", "scripting"],
     "host_permissions": ["*://*.youtube.com/*"],
