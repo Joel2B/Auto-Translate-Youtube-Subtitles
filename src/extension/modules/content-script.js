@@ -42,6 +42,12 @@ async function connectObserver() {
             }
 
             if (mutation.type === 'childList' && classCss.includes('ytp-caption-segment')) {
+                const captions = document.querySelector('.ytp-caption-window-bottom');
+
+                if (captions) {
+                    captions.style.display = 'none';
+                }
+
                 if (line2 === '') {
                     line2 = text;
                 } else {
@@ -49,12 +55,6 @@ async function connectObserver() {
                         line2 = text;
                     } else {
                         if (!RegExp('^' + escape(line2)).test(text)) {
-                            const captions = document.querySelector('.ytp-caption-window-bottom');
-
-                            if (captions) {
-                                captions.style.display = 'none';
-                            }
-
                             line1 = line2;
                             line2 = text;
                         }
