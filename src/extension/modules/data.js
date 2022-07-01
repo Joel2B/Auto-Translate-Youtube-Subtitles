@@ -1,15 +1,15 @@
 import { getAllLocalStorage } from 'utils/chrome/storage';
 
-export let optionsPool = {};
+let options = {};
 
 export function getOption(id) {
-    return optionsPool[id];
+    return options[id];
 }
 
 export function setOption(id, value) {
-    optionsPool[id] = value;
+    options[id] = value;
 }
 
 export async function getAllOptions() {
-    optionsPool = await getAllLocalStorage();
+    options = await getAllLocalStorage();
 }

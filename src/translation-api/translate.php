@@ -8,15 +8,13 @@ class Translate extends Utils {
     private $word;
     private $server;
     private $translation = [];
-    private $error       = false;
 
     public function __construct() {
         if (
-            ! isset($_POST['targetLanguage']) || empty($_POST['targetLanguage']) ||
-            ! isset($_POST['word']) || empty($_POST['word']) ||
-            ! isset($_POST['server']) || empty($_POST['server'])
+            !isset($_POST['targetLanguage']) || empty($_POST['targetLanguage']) ||
+            !isset($_POST['word']) || empty($_POST['word']) ||
+            !isset($_POST['server']) || empty($_POST['server'])
         ) {
-            $this->error = true;
             return;
         }
 
@@ -27,12 +25,11 @@ class Translate extends Utils {
         $this->target_language = $_POST['targetLanguage'];
         $this->word            = $_POST['word'];
         $this->server          = $_POST['server'];
+
+        $this->select_server();
     }
 
     public function select_server() {
-        if ($this->error) {
-            return;
-        }
         switch ($this->server) {
             case 'google-translate':
                 $this->google_translate();
@@ -71,7 +68,7 @@ class Translate extends Utils {
             $data['sourceLanguage'] = $this->source_language;
         }
 
-        $url         = "https://api.pons.com/text-translation-web/v4/translate?locale=de";
+        $url         = "https://api.pons.com/text-translation-web/v4/translate?locale=en";
         $data        = $this->get_url_content($url, json_encode($data));
         $parsed_data = json_decode($data, true);
 
@@ -79,8 +76,8 @@ class Translate extends Utils {
             return;
         }
 
-        $this->translation['origin'] = $this->word;
-        $this->translation['trans']  = $parsed_data['text'];
+        $this->translation['origin']         = $this->word;
+        $this->translation['trans']          = $parsed_data['text'];
         $this->translation['serviceMessage'] = $parsed_data['serviceMessage'];
     }
 
@@ -88,5 +85,3 @@ class Translate extends Utils {
         return json_encode($this->translation);
     }
 }
-
-

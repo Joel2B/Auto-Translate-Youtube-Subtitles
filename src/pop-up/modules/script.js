@@ -19,17 +19,19 @@ async function app() {
     document.querySelector('.tab-nav').addEventListener(
         'click',
         (e) => {
-            if (e.target.nodeName == 'A') {
+            if (e.target.nodeName === 'A') {
                 for (const [index, option] of options.entries()) {
-                    if (option.className == 'active') {
+                    if (option.className === 'active') {
                         option.classList.remove('active');
                         tabs[index].classList.remove('active');
                         break;
                     }
                 }
+
                 e.target.parentNode.classList.add('active');
+
                 for (const [index, option] of options.entries()) {
-                    if (option.className == 'active') {
+                    if (option.className === 'active') {
                         tabs[index].classList.add('active');
                         break;
                     }
@@ -50,11 +52,14 @@ async function app() {
     for (const input of inputs) {
         const id = input.id;
         let value = await getLocalStorage(id);
-        if (value == null) {
+
+        if (value === null) {
             value = true;
             setLocalStorage(id, value);
         }
+
         document.getElementById(id).checked = value;
+
         input.addEventListener(
             'change',
             () => {

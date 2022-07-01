@@ -12,6 +12,7 @@ export async function getLocalStorage(key) {
                 if (typeof key === 'string') {
                     value = value[key];
                 }
+
                 resolve(value);
             });
         } catch (ex) {

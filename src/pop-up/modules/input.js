@@ -5,10 +5,11 @@ export async function setupNumberInput(numberInput) {
     const id = input.id;
     const minus = numberInput.querySelector('.minus');
     const plus = numberInput.querySelector('.plus');
-    let lastValue = input.value;
 
+    let lastValue = input.value;
     let value = await getValue(id);
-    if (value == null) {
+
+    if (value === null) {
         value = Number(input.value);
         setValue(id, value);
     }
@@ -26,7 +27,7 @@ export async function setupNumberInput(numberInput) {
     input.addEventListener(
         'blur',
         () => {
-            if (input.value == '') {
+            if (input.value === '') {
                 input.value = lastValue;
             }
         },
@@ -37,11 +38,13 @@ export async function setupNumberInput(numberInput) {
         'keydown',
         (e) => {
             // Enter
-            if (e.keyCode == 8) {
+            if (e.keyCode === 8) {
                 return;
             }
+
             if (!e.repeat) {
                 const value = Number(input.value);
+
                 if (value >= input.min && value <= input.max) {
                     lastValue = value;
                 }
@@ -54,11 +57,13 @@ export async function setupNumberInput(numberInput) {
         'keyup',
         (e) => {
             // Enter
-            if (e.keyCode == 8) {
+            if (e.keyCode === 8) {
                 return;
             }
-            if (input.min != '' && input.max != '') {
+
+            if (input.min !== '' && input.max !== '') {
                 const value = Number(input.value);
+
                 if (value >= input.min && value <= input.max) {
                     setValue(id, value);
                 } else {
@@ -72,8 +77,9 @@ export async function setupNumberInput(numberInput) {
     minus.addEventListener(
         'click',
         () => {
-            if (input.min != '') {
+            if (input.min !== '') {
                 let value = Number(input.value);
+
                 if (value > input.min) {
                     input.value = --value;
                     setValue(id, value);
@@ -86,8 +92,9 @@ export async function setupNumberInput(numberInput) {
     plus.addEventListener(
         'click',
         () => {
-            if (input.max != '') {
+            if (input.max !== '') {
                 let value = Number(input.value);
+
                 if (value < input.max) {
                     input.value = ++value;
                     setValue(id, value);

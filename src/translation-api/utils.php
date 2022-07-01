@@ -1,7 +1,7 @@
 <?php
 
 class Utils {
-    function get_url_content(
+    public function get_url_content(
         $url,
         $data = ''
     ) {
@@ -9,7 +9,9 @@ class Utils {
         $headers    = [
             'Content-Type: application/json',
         ];
-        $curl    = curl_init();
+
+        $curl = curl_init();
+
         $options = [
             CURLOPT_URL            => $url,
             CURLOPT_USERAGENT      => $user_agent,
@@ -23,14 +25,18 @@ class Utils {
             CURLOPT_TIMEOUT        => TIMEOUT,
             CURLOPT_RETURNTRANSFER => true,
             // for debug only
+            CURLOPT_SSL_VERIFYHOST => false,
             CURLOPT_SSL_VERIFYPEER => false,
         ];
+
         if ($data) {
             $options[CURLOPT_POSTFIELDS] = $data;
         }
+
         curl_setopt_array($curl, $options);
         $content = curl_exec($curl);
         curl_close($curl);
+
         return $content;
     }
 }

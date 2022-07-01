@@ -50,6 +50,7 @@ async function connectObserver() {
                     } else {
                         if (!RegExp('^' + escape(line2)).test(text)) {
                             const captions = document.querySelector('.ytp-caption-window-bottom');
+
                             if (captions) {
                                 captions.style.display = 'none';
                             }
@@ -83,6 +84,7 @@ async function connectObserver() {
 
                 if (!player) {
                     console.log('[Extension] Observer error (time limit exceeded)');
+
                     clearInterval(timer);
                     resolve();
                 }

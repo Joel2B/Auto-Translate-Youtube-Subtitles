@@ -59,4 +59,3 @@ Set up translation
 Miscellaneous data
 
 ![8](https://user-images.githubusercontent.com/58922368/129125494-dd11a200-1f04-4f19-8d4a-18fe930b9ee4.png)
-

@@ -6,9 +6,10 @@ onMessage(async (request) => {
     const id = request.id;
     const value = request.value;
 
-    if (id == 'analytics') {
+    if (id === 'analytics') {
         const data = await getLocalStorage(id);
         data[value] += 1;
+
         setLocalStorage(id, data);
     }
 });
@@ -16,7 +17,7 @@ onMessage(async (request) => {
 async function setDefaultSettings() {
     const config = defaults;
 
-    for (const option in config) {
+    for (const option in defaults) {
         if ((await getLocalStorage(option)) !== undefined) {
             continue;
         }
