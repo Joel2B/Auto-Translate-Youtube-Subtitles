@@ -165,9 +165,13 @@ async function translateWord(e) {
                 Accept: 'application/json',
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-        }).then((response) => {
-            return response.json();
-        });
+        })
+            .then((response) => {
+                return response.json();
+            })
+            .catch((error) => {
+                console.warn(error);
+            });
 
         if (process.env.NODE_ENV === 'development') {
             console.log('FETCH', result);
