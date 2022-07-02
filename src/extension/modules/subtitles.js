@@ -309,7 +309,7 @@ export async function translateSubtitles() {
     const settingsButton = document.querySelector('.ytp-settings-button');
     settingsButton.click();
 
-    await delay(1000);
+    await delay(0);
 
     let subtitlesExist = false;
     const subtitulesMenu = document.querySelectorAll('.ytp-menuitem');
@@ -327,7 +327,7 @@ export async function translateSubtitles() {
         return;
     }
 
-    await delay(1000);
+    await delay(0);
 
     let translationsExist = false;
 
@@ -370,7 +370,7 @@ export async function translateSubtitles() {
         subtituleItems[subtituleItems.length - 1].click();
     }
 
-    await delay(1000);
+    await delay(0);
 
     let languageExist = false;
     const languages = document.querySelectorAll('.ytp-menuitem');
