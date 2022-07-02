@@ -3,7 +3,7 @@ const defaults = {
     subtitlesActivated: false,
     'curent-path': '',
     'auto-translate': true,
-    'created-translations': true,
+    'created-translations': false,
     'primary-language': 'Spanish#es',
     'server-translate': 'Deepl*#deepl',
     'time-close-translation': 3,
