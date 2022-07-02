@@ -367,7 +367,10 @@ export async function translateSubtitles() {
         }
 
         // everything will work if the automatic translation button is at the end
-        subtituleItems[subtituleItems.length - 1].click();
+        const lastIndexItem = subtituleItems.length - 1;
+        const offset = subtituleItems[lastIndexItem].textContent.includes('>>') ? 1 : 0;
+
+        subtituleItems[lastIndexItem - offset].click();
     }
 
     await delay(0);
