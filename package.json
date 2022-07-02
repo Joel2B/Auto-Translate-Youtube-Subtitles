@@ -1,6 +1,6 @@
 {
     "name": "auto-translate-youtube-subtitles",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Auto Translate Youtube Subtitles",
     "scripts": {
         "build": "webpack --mode=production",
